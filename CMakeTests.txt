@@ -1,0 +1,26 @@
+# -*- CMake -*-
+cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
+
+option(TESTS "Build all tests." OFF)
+
+if(TESTS)
+  add_subdirectory(${sorts_SOURCE_DIR}/thirdparty/googletest-1.7.0 ${sorts_BINARY_DIR}/thirdparty/gtest)
+
+  enable_testing()
+  include_directories(${sorts_SOURCE_DIR}/thirdparty/googletest-1.7.0/include)
+
+  set(tests_SOURCES
+    tests/bucket_sort_test.cxx
+    tests/counting_sort_test.cxx
+    tests/heap_sort_test.cxx
+    tests/insertion_sort_test.cxx
+    tests/median_sort_test.cxx
+    tests/quick_sort_test.cxx
+    tests/radix_sort_test.cxx
+    tests/selection_sort_test.cxx
+    )
+  add_executable(tests ${tests_SOURCES} ${sorts_SOURCES})
+  target_link_libraries(tests gtest gtest_main)
+
+  add_test(NAME tests COMMAND tests)
+endif()
