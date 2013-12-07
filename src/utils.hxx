@@ -5,6 +5,16 @@
 
 #define DEBUG(x) // { std::cout << __PRETTY_FUNCTION__ << ":" << std::setw(6) << __LINE__ << " " << x; }
 
+namespace utils {
+
+template <typename T>
+struct is_string
+: public std::integral_constant<bool, std::is_same<char *, typename std::decay<T>::type>::value
+                                      || std::is_same<const char *, typename std::decay<T>::type>::value>
+{};
+
+}
+
 template <typename Value>
 struct SimpleDataPrinter {
   void operator () (Value const &value) const {
